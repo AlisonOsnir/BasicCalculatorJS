@@ -7,8 +7,8 @@ const operators = document.querySelectorAll('.operators div')
 const auxiliar = document.querySelector('.auxiliar')
 
 let setOperator
-let n1
-let n2
+let num1
+let num2
 
 let reset = false
 
@@ -20,32 +20,33 @@ numbers.forEach((number) => {
 
         if (!setOperator) {
             input.innerText += num
-            n1 = +input.innerText
-            
+            num1 = +input.innerText
+
             auxiliar.innerText = '' //Necessario???
-            auxiliar.innerText += n1
+            auxiliar.innerText += num1
+
+            console.log('first: ', num1)
         } else {
             if (reset) input.innerText = ''
             reset = false;
 
             input.innerText += num
-            n2 = +input.innerText
+            num2 = +input.innerText
             auxiliar.innerText += num
+
+            console.log('second: ', num2)
         }
 
         if (number.innerText === 'C') clear()
-
-        console.log('first: ', n1)
-        console.log('second: ', n2)
     })
 })
 
 operators.forEach((operator) => {
     operator.addEventListener('click', () => {
         setOperator = operator.innerText
- 
+
         reset = true
-        auxiliar.innerText += setOperator //Teste 
+        auxiliar.innerText += setOperator
         console.log('Operador: ', setOperator)
     })
 })
@@ -53,21 +54,21 @@ operators.forEach((operator) => {
 equalBtn.addEventListener('click', () => equal())
 
 function soma() {
-    return n1 + n2
+    return num1 + num2
 }
 function subtracao() {
-    return n1 - n2
+    return num1 - num2
 }
 function multiplicacao() {
-    return n1 * n2
+    return num1 * num2
 }
 function divisao() {
-    return n1 / n2
+    return num1 / num2
 }
 
 function clear() {
-    n1 = undefined
-    n2 = undefined
+    num1 = undefined
+    num2 = undefined
     input.innerText = 0
     auxiliar.innerText = ''
 }
@@ -75,17 +76,13 @@ function clear() {
 function equal() {
     let result
 
-    if (n1 && n2){
-        input.innerText = ''
-        if (setOperator == '+') result = soma()
-        if (setOperator == '-') result = subtracao()
-        if (setOperator == 'x') result = multiplicacao()
-        if (setOperator == '/') result = divisao()
+    if (setOperator == '+') result = soma()
+    if (setOperator == '-') result = subtracao()
+    if (setOperator == 'x') result = multiplicacao()
+    if (setOperator == '/') result = divisao()
 
-        input.innerText = result
-        n1 = result;
-        setOperator = undefined
-        auxiliar.innerText += ('=')
-
-    }
+    input.innerText = result
+    num1 = result;
+    setOperator = undefined
+    auxiliar.innerText += ('=')
 }
