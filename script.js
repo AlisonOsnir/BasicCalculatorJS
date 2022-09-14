@@ -1,57 +1,53 @@
-const clearBtn = document.getElementById('clear')
-const input = document.querySelector('.input')
+const display = document.querySelector('.display')
 const equalBtn = document.querySelector('.equal')
-const numbers = document.querySelectorAll('.numbers div')
+const inputs = document.querySelectorAll('.numbers div')
 const operators = document.querySelectorAll('.operators div')
+const auxiliar = document.querySelector('.auxiliar')               //Renomear
 
-const auxiliar = document.querySelector('.auxiliar')
-
-let setOperator
 let num1
 let num2
+let setOperator
+let result
+let resetDisplayToNum2 = false
 
-let reset = false
-
-numbers.forEach((number) => {
-    number.addEventListener('click', () => {
-        const num = number.innerText
-
-        if (input.innerText === '0' && num !== '.') input.innerText = '';
-
+//setNums
+inputs.forEach((inputBtn) => {
+    inputBtn.addEventListener('click', () => {
+        if (display.innerText === '0' && inputBtn.innerText !== '.') display.innerText = '';
         if (!setOperator) {
-            input.innerText += num
-            num1 = +input.innerText
-
-            auxiliar.innerText = '' //Necessario???
+            display.innerText += inputBtn.innerText
+            num1 = parseFloat(display.innerText)        //Tratar das dizimas periodicas
+            auxiliar.innerText = ''
             auxiliar.innerText += num1
-
-            console.log('first: ', num1)
         } else {
-            if (reset) input.innerText = ''
-            reset = false;
-
-            input.innerText += num
-            num2 = +input.innerText
-            auxiliar.innerText += num
-
-            console.log('second: ', num2)
+            if (resetDisplayToNum2) {
+                display.innerText = ''
+                resetDisplayToNum2 = false
+            }
+            display.innerText += inputBtn.innerText
+            num2 = parseFloat(display.innerText)
+            
+            auxiliar.innerText += inputBtn.innerText
         }
-
-        if (number.innerText === 'C') clear()
+        if (inputBtn.innerText === 'C') clear()         //SEPARAR LISTENER POR ID?
     })
 })
 
+//setOperators
 operators.forEach((operator) => {
     operator.addEventListener('click', () => {
-        setOperator = operator.innerText
-
-        reset = true
-        auxiliar.innerText += setOperator
-        console.log('Operador: ', setOperator)
+        //Show result of the last calc
+        if(result){
+            auxiliar.innerText = result
+        }
+        if(num1) {
+            setOperator = operator.innerText
+            resetDisplayToNum2 = true
+            auxiliar.innerText += setOperator
+            console.log('Operador: ', setOperator)
+        }
     })
 })
-
-equalBtn.addEventListener('click', () => equal())
 
 function soma() {
     return num1 + num2
@@ -66,23 +62,25 @@ function divisao() {
     return num1 / num2
 }
 
+function equal() {
+    if(num1,num2){
+        if (setOperator == '+') result = soma()
+        if (setOperator == '-') result = subtracao()
+        if (setOperator == 'x') result = multiplicacao()
+        if (setOperator == '/') result = divisao()
+        num1 = result;
+        display.innerText = result
+        auxiliar.innerText += ('=')
+        setOperator = undefined
+    }
+}
+
 function clear() {
     num1 = undefined
     num2 = undefined
-    input.innerText = 0
+    result = undefined
+    display.innerText = 0
     auxiliar.innerText = ''
 }
 
-function equal() {
-    let result
-
-    if (setOperator == '+') result = soma()
-    if (setOperator == '-') result = subtracao()
-    if (setOperator == 'x') result = multiplicacao()
-    if (setOperator == '/') result = divisao()
-
-    input.innerText = result
-    num1 = result;
-    setOperator = undefined
-    auxiliar.innerText += ('=')
-}
+equalBtn.addEventListener('click', () => equal())
