@@ -99,3 +99,9 @@ div.equal:hover {
 div.equal:active {
     font-weight: bold;
 }
+
+.auxiliar {
+    text-align: right;
+    font-size: 1.8rem;
+    transition: all .2s ease-in-out;
+}
