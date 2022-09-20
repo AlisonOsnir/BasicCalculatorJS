@@ -1,5 +1,4 @@
 //  Recriar o funcionmamento da calculadora do celular
-//      equalBTN pressionar apenas muda o font-size e/ou weight)
 //      tratar precisão dos decimais
 //      tratar repetiçao de dots
 
@@ -16,11 +15,14 @@ let num1 = ''
 let num2 = ''
 let result = ''
 let setOperator = ''
-displayResult.innerText = 0
+displayCalc.innerText = 0
 
 //setNums
 numbers.forEach((number) => {
     number.addEventListener('click', () => {
+
+        displayCalc.classList.add('displayFocus')
+        displayResult.classList.remove('displayFocus')
 
         if (!setOperator) {
             // dot handler
@@ -102,12 +104,13 @@ function clear() {
     num2 = ''
     result = ''
     setOperator = ''
-    displayCalc.innerText = ''
-    displayResult.innerText = '0'
+    displayCalc.innerText = '0'
+    displayResult.innerText = ''
 }
 
 equalBtn.addEventListener('click', () => {
-    //mudar font weight nos displays
+    displayCalc.classList.remove('displayFocus')
+    displayResult.classList.add('displayFocus')
 })
 
 clearBtn.addEventListener('click', () => clear())
