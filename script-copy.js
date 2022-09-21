@@ -26,40 +26,39 @@ numbers.forEach((number) => {
 
         if (!setOperator) {
             // dot handler
+            if (number.innerText == '.') {
+                num1 += number.innerText
+                displayCalc.innerText += number.innerText
+                return num1
+            }
             if (num1 == '' && number.innerText == '.') {
                 num1 = '0.'
                 displayCalc.innerText = num1
                 return num1
             } 
-            if (num1 != '' && number.innerText == '.') {
-                num1 += number.innerText
-                displayCalc.innerText += number.innerText
-                return num1
-            }
 
             num1 += number.innerText
             num1 = parseFloat(num1)
-            //displayCalc.innerText = '' 
             displayCalc.innerText = num1
             displayResult.innerText = ('=' + num1)
         } else {
             // dot handler
+            if (number.innerText == '.') {  
+                num2 += number.innerText
+                displayCalc.innerText += number.innerText
+                return num2
+            }
             if (num2 == '' && number.innerText == '.') {
                 num2 = '0.'
                 displayCalc.innerText += num2
                 return num2
             } 
-            if (num2 != '' && number.innerText == '.') {
-                num2 += number.innerText
-                displayCalc.innerText += number.innerText
-                return num2
-            }
-            
             num2 += number.innerText
             num2 = parseFloat(num2)
-            //displayCalc.innerText = ''
             displayCalc.innerText = (num1 + setOperator + num2)
             displayResult.innerText = ('=' + num2)
+            
+            console.log(num2)
         }
 
         if (num1, num2) {
@@ -71,7 +70,7 @@ numbers.forEach((number) => {
 //setOperators
 operators.forEach((operator) => {
     operator.addEventListener('click', () => {
-        //Show result of the last calc
+        //Use result to next calc
         if (result) {
             displayCalc.innerText = result
             num1 = result
