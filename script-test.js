@@ -1,11 +1,10 @@
 //  Recriar o funcionmamento da calculadora do celular
 //      tratar precisão dos decimais
-//      tratar repetiçao de dots
 
 //  Add Keyboard use
 
 const displayResult = document.querySelector('.displayResult')
-const displayCalc = document.querySelector('.displayCalc')               
+const displayCalc = document.querySelector('.displayCalc')
 const operators = document.querySelectorAll('.operators div')
 const numbers = document.querySelectorAll('.numbers div')
 const equalBtn = document.querySelector('.equal')
@@ -25,39 +24,40 @@ numbers.forEach((number) => {
         displayResult.classList.remove('displayFocus')
 
         if (!setOperator) {
+            dotHandler(num1, number.innerText)
             // dot handler
-            if (number.innerText == '.') {
-                num1 += number.innerText
-                displayCalc.innerText += number.innerText
-                return num1
-            }
-            if (num1 == '' && number.innerText == '.') {
-                num1 = '0.'
-                displayCalc.innerText = num1
-                return num1
-            } 
-
+            // if (num1 !== '' && number.innerText == '.') {
+            //     num1 += number.innerText
+            //     displayCalc.innerText += number.innerText
+            //     return num1
+            // }
+            // if (num1 === '' && number.innerText == '.') {
+            //     num1 = '0.'
+            //     displayCalc.innerText = num1
+            //     return num1
+            // }
             num1 += number.innerText
             num1 = parseFloat(num1)
             displayCalc.innerText = num1
             displayResult.innerText = ('=' + num1)
         } else {
+            dotHandler(num2, number.innerText)
             // dot handler
-            if (number.innerText == '.') {  
-                num2 += number.innerText
-                displayCalc.innerText += number.innerText
-                return num2
-            }
-            if (num2 == '' && number.innerText == '.') {
-                num2 = '0.'
-                displayCalc.innerText += num2
-                return num2
-            } 
+            // if (num2 !== '' && number.innerText == '.') {
+            //     num2 += number.innerText
+            //     displayCalc.innerText += number.innerText
+            //     return num2
+            // }
+            // if (num2 === '' && number.innerText == '.') {
+            //     num2 = '0.'
+            //     displayCalc.innerText += num2
+            //     return num2
+            // }
             num2 += number.innerText
             num2 = parseFloat(num2)
             displayCalc.innerText = (num1 + setOperator + num2)
             displayResult.innerText = ('=' + num2)
-            
+
             console.log(num2)
         }
 
@@ -94,7 +94,7 @@ function equal() {
         if (setOperator == '-') result = subtracao()
         if (setOperator == 'x') result = multiplicacao()
         if (setOperator == '/') result = divisao()
-        displayResult.innerText = ('=' + result)          //TRATAR PRECISAO DE DECIMAIS
+        displayResult.innerText = ('=' + result)          //TRATAR PRECISAO DE DIZIMAS 
     }
 }
 
@@ -113,3 +113,16 @@ equalBtn.addEventListener('click', () => {
 })
 
 clearBtn.addEventListener('click', () => clear())
+
+function dotHandler(num, input) {
+    if (num !== '' && input == '.') {
+        num += input
+        displayCalc.innerText += input
+        return num
+    }
+    if (num === '' && input == '.') {
+        num = '0.'
+        displayCalc.innerText += num
+        return num
+    }
+}
