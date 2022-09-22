@@ -15,6 +15,8 @@ let num2 = ''
 let result = ''
 let setOperator = ''
 displayCalc.innerText = 0
+let nextCalc = false
+
 
 //setNums
 numbers.forEach((number) => {
@@ -23,42 +25,40 @@ numbers.forEach((number) => {
         displayCalc.classList.add('displayFocus')
         displayResult.classList.remove('displayFocus')
 
+        if(nextCalc) clear()
+        
         if (!setOperator) {
-            dotHandler(num1, number.innerText)
             // dot handler
-            // if (num1 !== '' && number.innerText == '.') {
-            //     num1 += number.innerText
-            //     displayCalc.innerText += number.innerText
-            //     return num1
-            // }
-            // if (num1 === '' && number.innerText == '.') {
-            //     num1 = '0.'
-            //     displayCalc.innerText = num1
-            //     return num1
-            // }
+            if (num1 !== '' && number.innerText == '.') {
+                num1 += number.innerText
+                displayCalc.innerText += number.innerText
+                return num1
+            }
+            if (num1 === '' && number.innerText == '.') {
+                num1 = '0.'
+                displayCalc.innerText = num1
+                return num1
+            }
             num1 += number.innerText
             num1 = parseFloat(num1)
             displayCalc.innerText = num1
             displayResult.innerText = ('=' + num1)
         } else {
-            dotHandler(num2, number.innerText)
             // dot handler
-            // if (num2 !== '' && number.innerText == '.') {
-            //     num2 += number.innerText
-            //     displayCalc.innerText += number.innerText
-            //     return num2
-            // }
-            // if (num2 === '' && number.innerText == '.') {
-            //     num2 = '0.'
-            //     displayCalc.innerText += num2
-            //     return num2
-            // }
+            if (num2 !== '' && number.innerText == '.') {
+                num2 += number.innerText
+                displayCalc.innerText += number.innerText
+                return num2
+            }
+            if (num2 === '' && number.innerText == '.') {
+                num2 = '0.'
+                displayCalc.innerText += num2
+                return num2
+            }
             num2 += number.innerText
             num2 = parseFloat(num2)
             displayCalc.innerText = (num1 + setOperator + num2)
             displayResult.innerText = ('=' + num2)
-
-            console.log(num2)
         }
 
         if (num1, num2) {
@@ -74,6 +74,7 @@ operators.forEach((operator) => {
         if (result) {
             displayCalc.innerText = result
             num1 = result
+            nextCalc = false
         }
         if (num1) {
             setOperator = operator.innerText
@@ -105,24 +106,13 @@ function clear() {
     setOperator = ''
     displayCalc.innerText = '0'
     displayResult.innerText = ''
+    nextCalc = false
 }
 
 equalBtn.addEventListener('click', () => {
     displayCalc.classList.remove('displayFocus')
     displayResult.classList.add('displayFocus')
+    nextCalc = true
 })
 
 clearBtn.addEventListener('click', () => clear())
-
-function dotHandler(num, input) {
-    if (num !== '' && input == '.') {
-        num += input
-        displayCalc.innerText += input
-        return num
-    }
-    if (num === '' && input == '.') {
-        num = '0.'
-        displayCalc.innerText += num
-        return num
-    }
-}
