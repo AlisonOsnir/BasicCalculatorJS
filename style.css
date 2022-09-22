@@ -10,6 +10,7 @@ body {
 
 .calculator {
     padding: 20px;
+    border: 1px solid #ddd;
     box-shadow: 0 1px 4px 0 rgba(0,0,0, 0.2);
     border-radius: 1px;
 }
@@ -45,7 +46,7 @@ body {
     border-radius: 1px;
     width: 80px;
     text-align: center;
-    padding: 10px;
+    padding: 9.5px;
     margin: 20px 3px 10px 0;
     cursor: pointer;
     background-color: #ddd;
@@ -69,7 +70,7 @@ body {
     border-radius: 1px;
     width: 80px;
     text-align: center;
-    padding: 10px;
+    padding: 11px 9.5px;
     margin: 10px 3px 10px 0;
     cursor: pointer;
     background-color: #f9f9f9;
@@ -88,7 +89,7 @@ div.equal {
     border-radius: 1px;
     width: 17%;
     text-align: center;
-    padding: 127px 10px;
+    padding: 127px 9.5px;
     margin: 10px 5px 10px 0;
     vertical-align: top;
     cursor: pointer;
