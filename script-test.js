@@ -1,5 +1,4 @@
 //  tratar precisão dos decimais
-//  Add Keyboard input
 
 const displayResult = document.querySelector('.displayResult')
 const displayCalc = document.querySelector('.displayCalc')
@@ -11,113 +10,63 @@ const clearBtn = document.getElementById('clear')
 let num1 = ''
 let num2 = ''
 let result = ''
-let setOperator = ''
+let selectedOperator = ''
 displayCalc.innerText = 0
 let nextCalc = false
 
-let numValue
-
-//setNums
 numbers.forEach((number) => {
-  number.addEventListener('click', () => {
-
-    displayCalc.classList.add('displayFocus')
-    displayResult.classList.remove('displayFocus')
-
-    if (nextCalc) clear()
-    numValue = number.innerText
-    inputHandler(numValue)
-    // if (!setOperator) {
-    //   // dot handler
-    //   if (num1 !== '' && number.innerText == '.') {
-    //     num1 += number.innerText
-    //     displayCalc.innerText += number.innerText
-    //     return
-    //   }
-    //   if (num1 === '' && number.innerText == '.') {
-    //     num1 = '0.'
-    //     displayCalc.innerText = num1
-    //     return
-    //   }
-    //   num1 += number.innerText
-    //   num1 = parseFloat(num1)
-    //   displayCalc.innerText = num1
-    //   displayResult.innerText = ('=' + num1)
-    // } else {
-    //   // dot handler
-    //   if (num2 !== '' && number.innerText == '.') {
-    //     num2 += number.innerText
-    //     displayCalc.innerText += number.innerText
-    //     return num2
-    //   }
-    //   if (num2 === '' && number.innerText == '.') {
-    //     num2 = '0.'
-    //     displayCalc.innerText += num2
-    //     return num2
-    //   }
-    //   num2 += number.innerText
-    //   num2 = parseFloat(num2)
-    //   displayCalc.innerText = (num1 + setOperator + num2)
-    //   displayResult.innerText = ('=' + num2)
-    // }
-
-    if (num1, num2) {
-      equal()
-    }
-  })
+    number.addEventListener('click', () => {
+        focusDisplayCalc()
+        inputHandler(number.innerText)
+    })
 })
 
-function inputHandler (inputValue) {
-if (!setOperator) {
-  // dot handler
-  if (num1 !== '' && inputValue == '.') {
-    num1 += inputValue
-    displayCalc.innerText += inputValue
-    return
-  }
-  if (num1 === '' && inputValue == '.') {
-    num1 = '0.'
-    displayCalc.innerText = num1
-    return
-  }
-  num1 += inputValue
-  num1 = parseFloat(num1)
-  displayCalc.innerText = num1
-  displayResult.innerText = ('=' + num1)
-} else {
-  // dot handler
-  if (num2 !== '' && inputValue == '.') {
-    num2 += inputValue
-    displayCalc.innerText += inputValue
-    return num2
-  }
-  if (num2 === '' && inputValue == '.') {
-    num2 = '0.'
-    displayCalc.innerText += num2
-    return num2
-  }
-  num2 += inputValue
-  num2 = parseFloat(num2)
-  displayCalc.innerText = (num1 + setOperator + num2)
-  displayResult.innerText = ('=' + num2)
-}
+function inputHandler(inputValue) {
+    if (nextCalc) {
+        clearAll()
+    }
+    if (!selectedOperator) {
+        // dot handler
+        if (num1 !== '' && inputValue == '.') {
+            num1 += inputValue
+            displayCalc.innerText += inputValue
+            return
+        }
+        if (num1 === '' && inputValue == '.') {
+            num1 = '0.'
+            displayCalc.innerText = num1
+            return
+        }
+        num1 += inputValue
+        num1 = parseFloat(num1)
+        displayCalc.innerText = num1
+        displayResult.innerText = ('=' + num1)
+    } else {
+        // dot handler
+        if (num2 !== '' && inputValue == '.') {
+            num2 += inputValue
+            displayCalc.innerText += inputValue
+            return num2
+        }
+        if (num2 === '' && inputValue == '.') {
+            num2 = '0.'
+            displayCalc.innerText += num2
+            return num2
+        }
+        num2 += inputValue
+        num2 = parseFloat(num2)
+        displayCalc.innerText = (num1 + selectedOperator + num2)
+        displayResult.innerText = ('=' + num2)
+    }
+    if (num1, num2) {
+        equal()
+    }
 }
 
-//setOperators
 operators.forEach((operator) => {
-  operator.addEventListener('click', () => {
-    //Use result to next calc
-    if (result) {
-      displayCalc.innerText = result
-      num1 = result
-      nextCalc = false
-    }
-    if (num1) {
-      setOperator = operator.innerText
-      num2 = ''
-      displayCalc.innerText += setOperator
-    }
-  })
+    operator.addEventListener('click', () => {
+        setOperator(operator.innerText)
+    })
 })
 
 function soma() { return num1 + num2 }
@@ -126,90 +75,102 @@ function multiplicacao() { return num1 * num2 }
 function divisao() { return num1 / num2 }
 
 function equal() {
-  if (num1, num2) {
-    if (setOperator == '+') result = soma()
-    if (setOperator == '-') result = subtracao()
-    if (setOperator == 'x') result = multiplicacao()
-    if (setOperator == '/') result = divisao()
-    displayResult.innerText = ('=' + result)          //TRATAR PRECISAO DE DIZIMAS 
-  }
+    if (num1, num2) {
+        if (selectedOperator == '+') result = soma()
+        if (selectedOperator == '-') result = subtracao()
+        if (selectedOperator == 'x') result = multiplicacao()
+        if (selectedOperator == '/') result = divisao()
+        displayResult.innerText = ('=' + result)          //TRATAR PRECISAO DE DIZIMAS 
+    }
 }
 
-function clear() {
-  num1 = ''
-  num2 = ''
-  result = ''
-  setOperator = ''
-  displayCalc.innerText = '0'
-  displayResult.innerText = ''
-  nextCalc = false
+function clearAll() {
+    num1 = ''
+    num2 = ''
+    result = ''
+    selectedOperator = ''
+    displayCalc.innerText = '0'
+    displayResult.innerText = ''
+    nextCalc = false
+    focusDisplayCalc()
 }
 
 equalBtn.addEventListener('click', () => {
-  displayCalc.classList.remove('displayFocus')
-  displayResult.classList.add('displayFocus')
-  nextCalc = true
+    focusDisplayResult()
+    nextCalc = true
 })
 
-clearBtn.onclick = clear
+clearBtn.onclick = clearAll
 
 window.onload = function () {
-document.onkeydown = keyboardInput;
+    document.onkeydown = keyboardInput;
 }
 
 function keyboardInput(key) {
-    if ((key.which < 0 || key.which > 57) && (key.which !== 13 && key.which !== 99)) {
-        return false;
+    let numValue
+    key.preventDefault();
+    if (key.which === 48) {
+        numValue = "0";
+    } else if (key.which === 49) {
+        numValue = "1";
+    } else if (key.which === 50) {
+        numValue = "2";
+    } else if (key.which === 51) {
+        numValue = "3";
+    } else if (key.which === 52) {
+        numValue = "4";
+    } else if (key.which === 53) {
+        numValue = "5"; 1
+    } else if (key.which === 54) {
+        numValue = "6";
+    } else if (key.which === 55) {
+        numValue = "7";
+    } else if (key.which === 56 && !key.shiftKey) {
+        numValue = "8";
+    } else if (key.which === 57) {
+        numValue = "9";
+    } else if (key.which === 190) {
+        numValue = ".";
+    } else if (key.which === 56 && key.shiftKey) {
+        return setOperator('x');
+    } else if (key.which === 193) {
+        return setOperator('/');
+    } else if (key.which === 187 && key.shiftKey) {
+        return setOperator('+');
+    } else if (key.which === 189) {
+        return setOperator('-');
+    }
+    else if (key.which === 13 || (key.which === 187 && !key.shiftKey)) {
+        focusDisplayResult()
+        return nextCalc = true;
+    } else if (key.which === 46) {
+        return clearAll();
     } else {
-        key.preventDefault();
-        if (key.which === 48) {
-            numValue = "0";
-        } else if (key.which === 49) {
-            numValue = "1";
-        } else if (key.which === 50) {
-            numValue = "2";
-        } else if (key.which === 51) {
-            numValue = "3";
-        } else if (key.which === 52) {
-            numValue = "4";
-        } else if (key.which === 53) {
-            numValue = "5";
-        } else if (key.which === 54) {
-            numValue = "6";
-        } else if (key.which === 55) {
-            numValue = "7";
-        } else if (key.which === 56) {
-            numValue = "8";
-        } else if (key.which === 57) {
-            numValue = "9";
-        } else if (key.which === 46) {
-            numValue = ".";
-        } else if (key.which === 42) {
-            numValue = "*";
-        } else if (key.which === 47) {
-            numValue = "/";
-        } else if (key.which === 43) {
-            numValue = "+";
-        } else if (key.which === 45) {
-            numValue = "-";
-        } else if (key.which === 13) {
-          displayCalc.classList.remove('displayFocus')
-          displayResult.classList.add('displayFocus')
-          nextCalc = true;
-        } else if (key.which === 99) {
-            clear();
-        } else {
-            //display.value = display.value; //????????
-        }
-        inputHandler(numValue)
-        console.log(numValue)
-        return true;
+        return
+    }
+    inputHandler(numValue)
+}
+
+function setOperator(operator) {
+    focusDisplayCalc()
+    if (result) {
+        displayCalc.innerText = result
+        num1 = result
+        nextCalc = false
+    }
+    if (num1) {
+        selectedOperator = operator
+        num2 = ''
+        displayCalc.innerText += selectedOperator
     }
 }
 
-// for deleting value using backspace
-function backspaceKeyEvent (event) {
-    if (event.which === 8) {
-        deleteSingle();
-    }
+function focusDisplayCalc() {
+    displayCalc.classList.add('displayFocus')
+    displayResult.classList.remove('displayFocus')
+}
+
+function focusDisplayResult() {
+    displayCalc.classList.remove('displayFocus')
+    displayResult.classList.add('displayFocus')
 }

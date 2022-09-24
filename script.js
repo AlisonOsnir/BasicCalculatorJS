@@ -23,9 +23,9 @@ numbers.forEach((number) => {
     displayCalc.classList.add('displayFocus')
     displayResult.classList.remove('displayFocus')
 
-    if (nextCalc) clear()
+    if (nextCalc) clearAll()
 
-    if (!setOperator) {
+    if (!selectedOperator) {
       // dot handler
       if (num1 !== '' && number.innerText == '.') {
         num1 += number.innerText
@@ -55,7 +55,7 @@ numbers.forEach((number) => {
       }
       num2 += number.innerText
       num2 = parseFloat(num2)
-      displayCalc.innerText = (num1 + setOperator + num2)
+      displayCalc.innerText = (num1 + selectedOperator + num2)
       displayResult.innerText = ('=' + num2)
     }
 
@@ -75,9 +75,9 @@ operators.forEach((operator) => {
       nextCalc = false
     }
     if (num1) {
-      setOperator = operator.innerText
+      selectedOperator = operator.innerText
       num2 = ''
-      displayCalc.innerText += setOperator
+      displayCalc.innerText += selectedOperator
     }
   })
 })
@@ -89,19 +89,19 @@ function divisao() { return num1 / num2 }
 
 function equal() {
   if (num1, num2) {
-    if (setOperator == '+') result = soma()
-    if (setOperator == '-') result = subtracao()
-    if (setOperator == 'x') result = multiplicacao()
-    if (setOperator == '/') result = divisao()
+    if (selectedOperator == '+') result = soma()
+    if (selectedOperator == '-') result = subtracao()
+    if (selectedOperator == 'x') result = multiplicacao()
+    if (selectedOperator == '/') result = divisao()
     displayResult.innerText = ('=' + result.toPrecision())          //TRATAR PRECISAO DE DIZIMAS 
   }
 }
 
-function clear() {
+function clearAll() {
   num1 = ''
   num2 = ''
   result = ''
-  setOperator = ''
+  selectedOperator = ''
   displayCalc.innerText = '0'
   displayResult.innerText = ''
   nextCalc = false
@@ -113,4 +113,14 @@ equalBtn.addEventListener('click', () => {
   nextCalc = true
 })
 
-clearBtn.onclick = clear
+clearBtn.onclick = clearAll
+
+function focusDisplayCalc() {
+  displayCalc.classList.add('displayFocus')
+  displayResult.classList.remove('displayFocus')
+}
+
+function focusDisplayResult() {
+  displayCalc.classList.remove('displayFocus')
+  displayResult.classList.add('displayFocus')
+}
