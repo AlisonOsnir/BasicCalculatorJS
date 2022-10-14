@@ -1,0 +1,24 @@
+{
+  "name": "basiccalculatorjs",
+  "version": "1.0.0",
+  "description": "Basic calculator for web and desktop applications.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlisonOsnir/BasicCalculatorJS.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlisonOsnir/BasicCalculatorJS/issues"
+  },
+  "homepage": "https://github.com/AlisonOsnir/BasicCalculatorJS#readme",
+  "devDependencies": {
+    "electron": "^21.1.1"
+  }
+}
